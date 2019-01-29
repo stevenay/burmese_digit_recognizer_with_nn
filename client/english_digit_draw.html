@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <title>Burmese MNIST</title>
+    <style>
+        .clearfix::after {
+        content: '';
+        clear: both;
+        display: table;
+      }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="margin-top:1em;">English MNIST</h1>
+                <p>developed by <a href="https://github.com/stevenay">Nay Lin Aung</a></p>
+                <a style="margin-bottom: 2em; font-weight: bold; display: block" href="./burmese_digit_draw.html">Go to Burmese Digit Recognizer</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div style="float: left">
+                <canvas id="can" width="280" height="280" style="top:10%; left:10%; border:2px solid;"></canvas>
+                <div>
+                    <input type="button" value="Clear" id="clr" size="23" onclick="erase()" class="btn btn-secondary" />
+                    <input type="button" value="Detect" id="recognize" size="23" onclick="recognize()" class="btn btn-primary" />
+                </div>
+                <br /><br />
+            </div>
+            <div style="float: left; margin-left: 20px;">
+                <h2>Result</h2>
+                <h1 id='nnOut'></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Normalized Pixel Array Data</h3>
+                <p style="width:100%; overflow-wrap: break-word; font-size: 12px;" id="nnInput"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/synaptic.js"></script>
+    <script src="./js/EnglishOfflinePredict.js"></script>
+    <script src="./js/EnglishDigitCanvas.js"></script>
+    <script>
+        init()
+    </script>
+</body>
+
+</html>

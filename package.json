@@ -1,0 +1,16 @@
+{
+  "name": "burmese_nn_js",
+  "version": "1.0.0",
+  "description": "Neural networks in JavaScript with Synaptic.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mnist": "^1.1.0",
+    "mnist_dl": "^1.0.0",
+    "synaptic": "^1.1.4"
+  }
+}
