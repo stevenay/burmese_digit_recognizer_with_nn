@@ -2,9 +2,7 @@
 
 Burmese Digit Recognizer using one-hidden layer Neural Network based on [BHDD Burmese Handwritten  Digit Dataset](https://github.com/baseresearch/BHDD).
 
-```
-[![Demo](https://i.imgur.com/vKb2F1B.png)](https://www.youtube.com/watch?v=PMVWNI1j4FM)
-```
+[![Demo](https://j.gifs.com/zvPgYY.gif)](https://www.youtube.com/watch?v=PMVWNI1j4FM)
 
 Machine Learning နည်းပညာကို အသုံးပြုပြီး develop လုပ်ထားတဲ့ Burmese Handwritten Digit Recognizer လေးပါ။ Synaptic.js ကို အသုံးပြုပြီး one-hidden layer Neural Network တည်ဆောက်ပြီး ရေးသားထားတာပါ။ Dataset အနေနဲ့ BHDD dataset ကို အသုံးပြုထားပါတယ်။
 
