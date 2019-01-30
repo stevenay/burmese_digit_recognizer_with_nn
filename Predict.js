@@ -7,8 +7,8 @@ const knowledge = JSON.parse(fs.readFileSync('./trained_models/BurmeseNetwork_ve
 // Conver the network back to useable network
 var myNetwork = synaptic.Network.fromJSON(knowledge);
 
-// creates a training set of 700 images and a testset with 20 elements
-const set = mnist.set(7000, 3000)
+// creates a training set of 5000 images and a testset with 3000 elements
+const set = mnist.set(5000, 3000)
 
 const trainingSet = set.training
 const testSet = set.test

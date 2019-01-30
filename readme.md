@@ -20,6 +20,8 @@ Project ရဲ့ `trained_models` folder ထဲမှာ train ပြီးသ�
 - ပထမအချက်က ဂဏန်း ၁ လုံးဘဲ ရေးလို့ ရပါသေးတယ်။ ၁ ဆို ၁၊ ၂ ဆို ၂ တလုံးတည်းပါ။  
 - နောက်တစ်ခုက စမ်းတဲ့အခါ canvas ရဲ့ အလယ်တည့်တည့်မှာ ဂဏန်းကို ခပ်ကြီးကြီးနဲ့ အပြည့်ရေးပေးဖို့ လိုပါတယ်။
 
+တကယ် train ကြည့်တော့ ရလာတဲ့ model က test data နဲ့တော့ အကုန်နီးပါးမှန်ပြီး error rate အတော်လေးနည်းတယ် ဆိုပေမယ့် တကယ်တမ်း canvas ပေါ်မှာ ရေးပြီး စမ်းကြည့်တဲ့အခါ အဆင်မပြေတာလေးတွေတွေ့လာရပါတယ်။ အဓိကပြဿနာက canvas ပေါ်က image pre-processing လုပ်တာ လိုအပ်ချက်ရှိနေသေးတာကြောင့်လို့ ထင်ပါတယ်။
+
 ## Training Process Overview
 
 ### Choice of Programming Language
@@ -49,13 +51,13 @@ Synaptic.js က တကယ့်ကို tiny library လေးပါ။ code fi
 
 Network ကတော့ 100 neurons ပါတဲ့ one-hidden layer နဲ့ဘဲ ဆောက်လိုက်ပါတယ်။ 200 neurons နဲ့ တည်ဆောက်ကြည့်သေးပေမယ့် တကယ် train ကြည့်တဲ့အခါ ထင်သလောက် ရလဒ်မကောင်းဘဲ learning rate က iteration တစ်ခုနဲ့တစ်ခုကြား လိုတာထက်ပိုပြီး အရမ်းကြာနေတာကို တွေ့ရပါတယ်။ Activation function ကတော့ Logistic (Sigmoid) သုံးထားပါတယ်။ Output layer အတွက်တော့ Softmax activation ကို library မှာ မပါလာလို့ ကိုယ်ဘာကိုဘဲ ဖြည့်ရေးလိုက်ပါတယ်။ Loss function ကတော့ အားလုံးသိပြီးသား Cross entropy ဘဲ သုံးထားပါတယ်။
 
-Training algorithm ကတော့ Synaptic.js ရဲ့ ကျောရိုးအနေနဲ့ ပါလာတဲ့ Google developer Derek Monner ရဲ့ LSTM ကို အခြေခံထားတဲ့ architecture free LSTM-g ဆိုတဲ့ algorithm ကိုဘဲ အသုံးပြုလိုက်ပါတယ်။ အဲဒီ algorithm ကလည်း တနည်းတဖုံ စိတ်ဝင်စားဖို့ကောင်းပြီး gradient based တွေထက် performance ပိုကောင်းတယ်လို့တော့ သူ့ research paper ထဲမှာ ရေးထားတာ တွေ့ရပါတယ်။
+Training algorithm ကတော့ Synaptic.js ရဲ့ ကျောရိုးအနေနဲ့ ပါလာတဲ့ Google developer Derek Monner ရဲ့ LSTM ကို အခြေခံထားတဲ့ architecture free LSTM-g ဆိုတဲ့ algorithm ကိုဘဲ အသုံးပြုလိုက်ပါတယ်။
 
-နောက်ဆုံးအဆင့် train တာကိုတော့ AWS EC2 ကို c4.8xlarge type နဲ့ instance တစ်ခုဆောက်ပြီး run ပါတယ်။ Node server နဲ့ဘဲ train တာပါ။ Instance ဖိုးတော့ USD 22 လောက် ကုန်ကျမှု ရှိပါတယ်။ 
+နောက်ဆုံးအဆင့် train တာကိုတော့ AWS EC2 ကို c4.8xlarge type နဲ့ instance တစ်ခုဆောက်ပြီး run ပါတယ်။ Node server နဲ့ဘဲ train တာပါ။ Instance ဖိုးတော့ USD 25 လောက် ကုန်ကျမှု ရှိပါတယ်။ 
 
 Training data 40000 နဲ့ iteration ပေါင်း ၃၀၀ အကျော်လောက် train အပြီးမှာတော့ error rate 0.01 လောက်ရလာလို့ train တာ break လိုက်ပါတယ်။
 
-### Input Data Pre-processing (Image Pre-processing)
+### Input Data Pre-processing (Canvas Image Pre-processing)
 
 ဒါကတော့ အပျော်ရဆုံး အပိုင်းပါဘဲ (Pun intended) ။ ဒီအကြောင်း အသေးစိတ်ရေးမယ်ဆိုရင် article တစ်ပုဒ်စာ ထွက်သွားနိုင်ပါတယ်။
 
