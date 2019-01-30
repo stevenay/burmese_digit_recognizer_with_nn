@@ -5,7 +5,6 @@ var scaleStrokeWidth = true
 var canvas
 var ctx
 
-// Credit http://myselph.de/
 var prevX = 0
 var currX = 0
 var prevY = 0

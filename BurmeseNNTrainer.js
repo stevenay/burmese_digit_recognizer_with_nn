@@ -2,8 +2,8 @@ const mnist = require('mnist')
 const synaptic = require('synaptic')
 const fs = require('fs')
 
-// creates a training set of 9000 images and a testset with 4000 elements
-const set = mnist.set(9000, 3000)
+// creates a training set of 40000 images and a testset with 3000 elements
+const set = mnist.set(40000, 3000)
 
 const trainingSet = set.training
 const testSet = set.test
@@ -31,7 +31,7 @@ const trainer = new Trainer(myNetwork)
 trainer.train(trainingSet, {
   rate: 0.2,
   iterations: 700,
-  error: 0.1,
+  error: 0.01,
   shuffle: true,
   log: 1,
   cost: Trainer.cost.CROSS_ENTROPY
