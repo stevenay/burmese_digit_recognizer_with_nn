@@ -228,6 +228,7 @@ function draw(ctx, color, lineWidth, x1, y1, x2, y2) {
 
 function erase() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    paths = [];
     document.getElementById('nnOut').innerHTML = '';
 }
 
