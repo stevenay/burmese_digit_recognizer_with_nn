@@ -118,7 +118,7 @@ function recognize() {
     copyCtx.translate(-canvas.width / 2, -canvas.height / 2);
 
     // translate to center of mass
-    // copyCtx.translate(trans.transX, trans.transY);
+    copyCtx.translate(trans.transX, trans.transY);
 
     if (scaleStrokeWidth) {
         // redraw the image with a scaled lineWidth first.
