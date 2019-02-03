@@ -118,7 +118,7 @@ function recognize() {
     copyCtx.translate(-canvas.width / 2, -canvas.height / 2);
 
     // translate to center of mass
-    // copyCtx.translate(trans.transX, trans.transY);
+    copyCtx.translate(trans.transX, trans.transY);
 
     if (scaleStrokeWidth) {
         // redraw the image with a scaled lineWidth first.
@@ -193,6 +193,12 @@ function init() {
     canvas = document.getElementById('can');
     ctx = canvas.getContext("2d");
 
+    canvas.addEventListener("touchstart", function(e) {
+        findxy('touchstart', e)
+    }, false);
+    canvas.addEventListener("touchmove", function(e) {
+        findxy('touchmove', e)
+    }, false);
     canvas.addEventListener("mousemove", function (e) {
         findxy('move', e)
     }, false);
@@ -222,6 +228,7 @@ function draw(ctx, color, lineWidth, x1, y1, x2, y2) {
 
 function erase() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    paths = [];
     document.getElementById('nnOut').innerHTML = '';
 }
 
@@ -284,5 +291,56 @@ function findxy(res, e) {
             paths[paths.length-1] = currPath;
             draw(ctx, color, lineWidth, prevX, prevY, currX, currY);
         }
+    }
+
+    if(res == 'touchstart') {
+        e.preventDefault();
+
+        if (e.pageX != undefined && e.pageY != undefined) {
+            currX = e.touches[0].clientX;
+            currY = e.touches[0].clientY - canvas.offsetTop;
+        } else {
+            currX = e.touches[0].clientX + document.body.scrollLeft
+                + document.documentElement.scrollLeft
+                - canvas.offsetLeft;
+            currY = e.touches[0].clientY + document.body.scrollTop
+                + document.documentElement.scrollTop
+                - canvas.offsetTop;
+        }
+
+        ctx.beginPath();
+        ctx.fillStyle = "#000000";
+        ctx.lineWidth = 1;
+        ctx.arc(currX,currY,lineWidth/2,0,2*Math.PI);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+
+        paths.push([[currX], [currY]]);
+    }
+
+    if(res == 'touchmove') {
+        e.preventDefault();
+
+        prevX = currX;
+        prevY = currY;
+
+        if (e.pageX != undefined && e.pageY != undefined) {
+            currX = e.touches[0].clientX;
+            currY = e.touches[0].clientY - canvas.offsetTop;
+        } else {
+            currX = e.touches[0].clientX + document.body.scrollLeft
+                + document.documentElement.scrollLeft
+                - canvas.offsetLeft;
+            currY = e.touches[0].clientY + document.body.scrollTop
+                + document.documentElement.scrollTop
+                - canvas.offsetTop;
+        }
+        currPath = paths[paths.length-1];
+        currPath[0].push(currX);
+        currPath[1].push(currY);
+        paths[paths.length-1] = currPath;
+        draw(ctx, color, lineWidth, prevX, prevY, currX, currY);
+
     }
 }

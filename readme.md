@@ -85,9 +85,14 @@ BHDD မှာတော့ canvas က image တွေကို 4 pixels corners 
 
 ### Improvments
 
- - Canvas on mobile browsers
+ - Canvas on mobile browsers (done)
+ - Responsive Canvas
  - Image pre-processing on canvas
  - Train data with CNN
+
+ ### Contributors
+
+ - [Tint Naing Win](https://github.com/tintnaingwinn) (Canvas on mobile browsers)
 
 ## Credit
 

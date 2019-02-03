@@ -1,42 +1,26 @@
-import os
-from PIL import Image
 from array import *
-from random import shuffle
+import pickle
 
-# Load from and save to
-Names = [['.\\training_images', 'train'], ['.\\testing_images', 'test']]
+dataset = []
 
-for name in Names:
-    data_image = array('B')
-    data_label = array('B')
+# load dataset from pickle
+with open("data.pkl", "rb") as file:
+    dataset = pickle.load(file)
 
-    FileList = []
-    for dirname in os.listdir(name[0])[1:]:  # [1:] Excludes .DS_Store from Mac OS
-        path = os.path.join(name[0], dirname)
-        for filename in os.listdir(path):
-            # if filename.endswith(".png"):
-            FileList.append(os.path.join(name[0], dirname, filename))
+setNames = [['trainDataset', 'train'], ['testDataset', 'test']]
 
-    shuffle(FileList)  # Usefull for further segmenting the validation set
+for setName in setNames:
+    # get train and test dataset
+    trainDataset = dataset[setName[0]]
 
-    # loop through each file
-    for filename in FileList:
+    dataImage = array('B')
+    dataLabel = array('B')
 
-        label = int(filename.split('\\')[2])
+    for td in trainDataset:
+        dataImage.extend(td['image'].flatten())
+        dataLabel.append(td['label'])
 
-        Im = Image.open(filename)
-
-        pixel = Im.load()
-
-        width, height = Im.size
-
-        for x in range(0, width):
-            for y in range(0, height):
-                data_image.append(pixel[y, x])
-
-        data_label.append(label)  # labels start (one unsigned byte each)
-
-    hexval = "{0:#0{1}x}".format(len(FileList), 6)  # number of files in HEX
+    hexval = "{0:#0{1}x}".format(len(trainDataset), 6)  # number of files in HEX
 
     # header for label array
 
@@ -45,29 +29,26 @@ for name in Names:
     header.append(int('0x' + hexval[2:][:2], 16))
     header.append(int('0x' + hexval[2:][2:], 16))
 
-    data_label = header + data_label
+    dataLabel = header + dataLabel
 
     # additional header for images array
-
-    if max([width, height]) <= 256:
-        header.extend([0, 0, 0, width, 0, 0, 0, height])
-    else:
-        raise ValueError('Image exceeds maximum size: 256x256 pixels');
+    width, height = 28, 28
+    header.extend([0, 0, 0, width, 0, 0, 0, height])
 
     header[3] = 3  # Changing MSB for image data (0x00000803)
 
-    data_image = header + data_image
+    dataImage = header + dataImage
 
-    output_file = open(name[1] + '-images-idx3-ubyte', 'wb')
-    data_image.tofile(output_file)
+    output_file = open(setName[1] + '-images-idx3-ubyte', 'wb')
+    dataImage.tofile(output_file)
     output_file.close()
 
-    output_file = open(name[1] + '-labels-idx1-ubyte', 'wb')
-    data_label.tofile(output_file)
+    output_file = open(setName[1] + '-labels-idx1-ubyte', 'wb')
+    dataLabel.tofile(output_file)
     output_file.close()
 
 # gzip resulting files
-#
-# for name in Names:
+
+# for name in setNames:
 #     os.system('gzip ' + name[1] + '-images-idx3-ubyte')
 #     os.system('gzip ' + name[1] + '-labels-idx1-ubyte')
