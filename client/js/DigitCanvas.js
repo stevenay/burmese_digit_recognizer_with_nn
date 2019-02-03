@@ -93,7 +93,7 @@ function imageDataToGrayscale(imgData) {
 function recognize() {
     var t1 = new Date();
 
-    // convert RGBA image to a grayscale array, then compute bounding rectangle and center of mass  
+    // convert RGBA image to a grayscale array, then compute bounding rectangle and center of mass
     var imgData = ctx.getImageData(0, 0, 280, 280);
     grayscaleImg = imageDataToGrayscale(imgData); // change to grayscale and normalized it
     var boundingRectangle = getBoundingRectangle(grayscaleImg, 0.01);
@@ -233,25 +233,22 @@ function erase() {
 }
 
 function findxy(res, e) {
-    if (res == 'down') {
-        if (clearBeforeDraw == true) {
-          ctx.clearRect(0,0,canvas.width,canvas.height);
-          document.getElementById('nnInput').innerHTML='';
-        //   document.getElementById('nnOut').innerHTML='';
-          paths = [];
-          clearBeforeDraw = false;
+    if (res === 'down') {
+        if (clearBeforeDraw) {
+            erase();
+            clearBeforeDraw = false;
         }
-        
-        if (e.pageX != undefined && e.pageY != undefined) {
-          currX = e.pageX-canvas.offsetLeft;
-          currY = e.pageY-canvas.offsetTop;
+
+        if (e.pageX !== undefined && e.pageY !== undefined) {
+            currX = e.pageX-canvas.offsetLeft;
+            currY = e.pageY-canvas.offsetTop;
         } else {
-          currX = e.clientX + document.body.scrollLeft
-                  + document.documentElement.scrollLeft
-                  - canvas.offsetLeft;
-          currY = e.clientY + document.body.scrollTop
-                  + document.documentElement.scrollTop
-                  - canvas.offsetTop;
+            currX = e.clientX + document.body.scrollLeft
+                + document.documentElement.scrollLeft
+                - canvas.offsetLeft;
+            currY = e.clientY + document.body.scrollTop
+                + document.documentElement.scrollTop
+                - canvas.offsetTop;
         }
         //draw a circle
         ctx.beginPath();
@@ -260,30 +257,30 @@ function findxy(res, e) {
         ctx.stroke();
         ctx.closePath();
         ctx.fill();
-        
+
         paths.push([[currX], [currY]]);
         paintFlag = true;
     }
-    if (res == 'up' || res == "out") {
+    if (res === 'up' || res === "out") {
         paintFlag = false;
         //console.log(paths);
     }
-    
-    if (res == 'move') {
+
+    if (res === 'move') {
         if (paintFlag) {
             // draw a line to previous point
             prevX = currX;
             prevY = currY;
-            if (e.pageX != undefined && e.pageY != undefined) {
-              currX = e.pageX-canvas.offsetLeft;
-              currY = e.pageY-canvas.offsetTop;
+            if (e.pageX !== undefined && e.pageY !== undefined) {
+                currX = e.pageX-canvas.offsetLeft;
+                currY = e.pageY-canvas.offsetTop;
             } else {
-              currX = e.clientX + document.body.scrollLeft
-                      + document.documentElement.scrollLeft
-                      - canvas.offsetLeft;
-              currY = e.clientY + document.body.scrollTop
-                      + document.documentElement.scrollTop
-                      - canvas.offsetTop;
+                currX = e.clientX + document.body.scrollLeft
+                    + document.documentElement.scrollLeft
+                    - canvas.offsetLeft;
+                currY = e.clientY + document.body.scrollTop
+                    + document.documentElement.scrollTop
+                    - canvas.offsetTop;
             }
             currPath = paths[paths.length-1];
             currPath[0].push(currX);
@@ -293,10 +290,15 @@ function findxy(res, e) {
         }
     }
 
-    if(res == 'touchstart') {
+    if(res === 'touchstart') {
         e.preventDefault();
 
-        if (e.pageX != undefined && e.pageY != undefined) {
+        if (clearBeforeDraw) {
+            erase();
+            clearBeforeDraw = false;
+        }
+
+        if (e.pageX !== undefined && e.pageY !== undefined) {
             currX = e.touches[0].clientX;
             currY = e.touches[0].clientY - canvas.offsetTop;
         } else {
@@ -319,7 +321,7 @@ function findxy(res, e) {
         paths.push([[currX], [currY]]);
     }
 
-    if(res == 'touchmove') {
+    if(res === 'touchmove') {
         e.preventDefault();
 
         prevX = currX;
